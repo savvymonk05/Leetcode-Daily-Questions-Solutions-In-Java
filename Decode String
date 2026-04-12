@@ -1,0 +1,39 @@
+class Solution {
+    public String decodeString(String s) {
+        Stack<Character> st = new Stack<>();
+        for(char ch : s.toCharArray()){
+            if(ch != ']'){
+                st.push(ch);
+            }else{
+                StringBuilder temp = new StringBuilder();
+                while(st.peek() != '['){
+                    temp.append(st.pop());
+                }
+                st.pop();
+                StringBuilder num = new StringBuilder();
+                while(!st.isEmpty() && Character.isDigit(st.peek())){
+                    num.append(st.pop());
+                }
+                num.reverse();
+                int  k = Integer.parseInt(num.toString());
+
+                StringBuilder ds = new StringBuilder();
+                temp.reverse();
+                String str = temp.toString();
+                for(int i = 0 ; i < k ; i++){
+                    ds.append(str);
+                }
+                for(char c : ds.toString().toCharArray()){
+                    st.push(c);
+                }
+            }
+        }
+        StringBuilder ans = new StringBuilder();
+        while(!st.isEmpty()){
+            ans.append(st.pop());
+        }
+        return ans.reverse().toString();
+
+        
+    }
+}
