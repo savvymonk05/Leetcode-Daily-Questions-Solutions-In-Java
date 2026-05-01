@@ -1,0 +1,44 @@
+class Solution {
+    public List<Integer> findValidElements(int[] nums) {
+        int n = nums.length;
+        int leftgreat[] = new int[n];
+        int rightgreat[] = new int[n];
+
+        leftgreat[0] = nums[0];
+
+        for(int i = 1; i < n; i++ ){
+            if(leftgreat[i-1] >= nums[i]){
+                leftgreat[i] = leftgreat[i-1];
+            } else {
+                leftgreat[i] = nums[i];
+            }
+        }
+
+        rightgreat[n-1] = nums[n-1];
+        for(int i = n-2; i >= 0; i--){
+            if(rightgreat[i+1] >= nums[i]){
+                rightgreat[i] = rightgreat[i+1];
+            } else {
+                rightgreat[i] = nums[i];
+            }
+        }
+
+        List<Integer> list = new ArrayList<>();
+
+        for(int i = 0; i < n; i++){
+
+            // first and last always valid
+            if(i == 0 || i == n-1){
+                list.add(nums[i]);
+                continue;
+            }
+
+            // strictly greater than all left OR all right
+            if(nums[i] > leftgreat[i-1] || nums[i] > rightgreat[i+1]){
+                list.add(nums[i]);
+            }
+        }
+
+        return list;
+    }
+}
